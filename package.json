@@ -1,0 +1,20 @@
+{
+  "name": "rescript-project-template",
+  "version": "0.0.1",
+  "scripts": {
+    "build:ts": "tsc --build ./tsconfig.json",
+    "build:res": "rescript build -w",
+    "build": "rescript && npm run build:ts",
+    "start": "node ./lib/js/src/index.js",
+    "build:deps": "rescript build -with-deps",
+    "clean": "rescript clean -with-deps"
+  },
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^17.0.31",
+    "gentype": "^4.3.0",
+    "rescript": "*",
+    "typescript": "^4.6.4"
+  }
+}

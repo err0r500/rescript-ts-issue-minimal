@@ -1,0 +1,20 @@
+rescript = 1
+cleaner = /home/matth/projects/pro/mansa/experiments/minimal-rescript-ts/node_modules/gentype/gentype.exe
+rule astj
+  command = /home/matth/projects/pro/mansa/experiments/minimal-rescript-ts/node_modules/rescript/linux/bsc.exe  -warn-error +101 -bs-v 9.1.4  -absname -bs-ast -o $out $i
+o src/main.ast : astj ../../src/main.res
+rule deps
+  command = /home/matth/projects/pro/mansa/experiments/minimal-rescript-ts/node_modules/rescript/linux/bsb_helper.exe -hash e873263abf3877e1d371b89758c4d2df $in
+  restat = 1
+o src/main.d : deps src/main.ast
+rule mij
+  command = /home/matth/projects/pro/mansa/experiments/minimal-rescript-ts/node_modules/rescript/linux/bsc.exe -I src   -warn-error +101 -bs-gentype /home/matth/projects/pro/mansa/experiments/minimal-rescript-ts/node_modules/gentype/gentype.exe -bs-package-name rescript-project-template -bs-package-output commonjs:lib/js/$in_d:.bs.js $i
+  dyndep = 1
+  restat = 1
+o src/main.cmj src/main.cmi ../js/src/main.bs.js : mij src/main.ast
+o src/pure.ast : astj ../../src/pure.res
+o src/pure.d : deps src/pure.ast
+o src/pure.cmj src/pure.cmi ../js/src/pure.bs.js : mij src/pure.ast
+o src/indexI.ast : astj ../../src/indexI.res
+o src/indexI.d : deps src/indexI.ast
+o src/indexI.cmj src/indexI.cmi ../js/src/indexI.bs.js : mij src/indexI.ast
